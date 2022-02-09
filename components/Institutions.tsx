@@ -3,10 +3,10 @@ import React, { FC, useEffect, useState } from 'react';
 const Institutions = () => {
   const [institutions, setInstitutions] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [institution, setInstitution] = useState('');
+  const [institutionId, setInstitutionId] = useState('');
 
   useEffect(() => {
-    console.log('use effect');
     (async function () {
       try {
         setIsLoading(true);
@@ -21,16 +21,32 @@ const Institutions = () => {
     })();
   }, []);
 
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    console.log('submit', institutionId);
+  };
+
+  const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const institution = institutions.filter((item) => {
+      return item.name == event.target.value;
+    });
+    setInstitution(event.target.value);
+    setInstitutionId(institution[0].id);
+  };
+
   return (
     !isLoading && (
       <div>
         <h1>Institutions</h1>
-        <select>
-          <option>Select an institution</option>
-          {institutions.map((institution) => (
-            <option key={institution.id}>{institution.name}</option>
-          ))}
-        </select>
+        <form onSubmit={handleSubmit}>
+          <select value={institution} onChange={handleChange}>
+            <option>Select an institution</option>
+            {institutions.map((institution) => (
+              <option key={institution.id}>{institution.name}</option>
+            ))}
+          </select>
+          <input type="submit" value="Submit" />
+        </form>
       </div>
     )
   );
