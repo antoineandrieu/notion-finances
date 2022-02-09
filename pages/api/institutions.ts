@@ -20,8 +20,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   } catch (error) {
     console.error(error);
   }
-  console.log(institutions);
-  res.status(200).json({ name: 'John Doe' });
+  res.status(200).json({ data: institutions });
 };
 
 export default handler;

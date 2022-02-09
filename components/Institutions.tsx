@@ -11,12 +11,10 @@ const Institutions = () => {
       try {
         setIsLoading(true);
         const response = await fetch('/api/institutions');
-        console.log(response);
+        const data = await response.json();
+        setInstitutions(data.data);
       } catch (error) {
         console.error('An error occurred:', error);
-        {
-          /* setError(error); */
-        }
       } finally {
         setIsLoading(false);
       }
@@ -24,9 +22,17 @@ const Institutions = () => {
   }, []);
 
   return (
-    <div>
-      <h1>Institutions</h1>
-    </div>
+    !isLoading && (
+      <div>
+        <h1>Institutions</h1>
+        <select>
+          <option>Select an institution</option>
+          {institutions.map((institution) => (
+            <option key={institution.id}>{institution.name}</option>
+          ))}
+        </select>
+      </div>
+    )
   );
 };
 
