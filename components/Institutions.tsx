@@ -1,9 +1,12 @@
 import React, { FC, useEffect, useState } from 'react';
+import { useSessionContext } from '../contexts/SessionContext';
 
 const Institutions = () => {
+  const { setInstitution } = useSessionContext();
+
   const [institutions, setInstitutions] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [institution, setInstitution] = useState('');
+  const [selectedInstitution, setSelectedInstitution] = useState('');
   const [institutionId, setInstitutionId] = useState('');
 
   useEffect(() => {
@@ -23,13 +26,14 @@ const Institutions = () => {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log('submit', institutionId);
+    setInstitution(institutionId);
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const institution = institutions.filter((item) => {
       return item.name == event.target.value;
     });
+    setSelectedInstitution(event.target.value);
     setInstitution(event.target.value);
     setInstitutionId(institution[0].id);
   };
@@ -39,7 +43,7 @@ const Institutions = () => {
       <div>
         <h1>Institutions</h1>
         <form onSubmit={handleSubmit}>
-          <select value={institution} onChange={handleChange}>
+          <select value={selectedInstitution} onChange={handleChange}>
             <option>Select an institution</option>
             {institutions.map((institution) => (
               <option key={institution.id}>{institution.name}</option>
