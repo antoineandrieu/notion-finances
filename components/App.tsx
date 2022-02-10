@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { SessionContext } from '../contexts/SessionContext';
 import Banks from './Banks';
+import Accounts from './Accounts';
 import UserAgreement from './UserAgreement';
 
 const App = () => {
@@ -8,8 +9,11 @@ const App = () => {
   const [requisitionId, setRequisitionId] = useState('');
   const [step, setStep] = useState('');
   const [, setLastStep] = useState('');
+  let sessionStorage;
 
-  const sessionStorage = window.sessionStorage;
+  if (typeof window !== 'undefined') {
+    sessionStorage = window.sessionStorage;
+  }
 
   useEffect(() => {
     const requisitionId = sessionStorage.getItem('requisitionId');
@@ -31,6 +35,8 @@ const App = () => {
         return <Banks />;
       case 'userAgreement':
         return <UserAgreement />;
+      case 'accounts':
+        return <Accounts />;
       default:
         return null;
     }
