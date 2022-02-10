@@ -1,11 +1,30 @@
-import React, { FC, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSessionContext } from '../contexts/SessionContext';
 
 const UserAgreement = () => {
-  const { bank } = useSessionContext();
+  const { bank, setRequisitionId } = useSessionContext();
+
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    console.log(bank);
+    (async function () {
+      try {
+        setIsLoading(true);
+        const body = JSON.stringify({ bank: bank });
+        const response = await fetch('/api/agreements', {
+          method: 'POST',
+          body,
+        });
+        const data = await response.json();
+        setRequisitionId(data.data.requisitionId);
+        console.log(data.data);
+        window.location.href = data.data.link;
+      } catch (error) {
+        console.error('An error occurred:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    })();
   }, []);
 
   return null;

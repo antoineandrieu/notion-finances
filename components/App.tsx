@@ -5,12 +5,18 @@ import UserAgreement from './UserAgreement';
 
 const App = () => {
   const [bank, setBank] = useState('');
+  const [requisitionId, setRequisitionId] = useState('');
   const [step, setStep] = useState('');
   const [, setLastStep] = useState('');
 
+  const sessionStorage = window.sessionStorage;
+
   useEffect(() => {
-    console.log(bank);
-    if (bank) {
+    const requisitionId = sessionStorage.getItem('requisitionId');
+    if (requisitionId) {
+      setRequisitionId(requisitionId);
+      setStep('accounts');
+    } else if (bank) {
       setStep('userAgreement');
       setLastStep('banks');
     } else {
@@ -36,6 +42,11 @@ const App = () => {
         bank,
         setBank: (bank) => {
           setBank(bank);
+        },
+        requisitionId,
+        setRequisitionId: (requisitionId) => {
+          setRequisitionId(requisitionId);
+          sessionStorage.setItem('requisitionId', requisitionId);
         },
       }}
     >
