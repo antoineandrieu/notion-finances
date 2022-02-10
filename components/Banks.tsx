@@ -26,6 +26,7 @@ const Banks = () => {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    console.log(bankId);
     setBank(bankId);
   };
 
@@ -34,7 +35,6 @@ const Banks = () => {
       return item.name == event.target.value;
     });
     setSelectedbank(event.target.value);
-    setBank(event.target.value);
     setBankId(bank[0].id);
   };
 

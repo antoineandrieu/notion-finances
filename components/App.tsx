@@ -1,24 +1,47 @@
-import React, { FC, useEffect, useState } from 'react';
-import { OnboardingContext } from '../contexts/OnboardingContext';
+import React, { useEffect, useState } from 'react';
+import { SessionContext } from '../contexts/SessionContext';
 import Banks from './Banks';
+import UserAgreement from './UserAgreement';
 
 const App = () => {
+  const [bank, setBank] = useState('');
   const [step, setStep] = useState('');
-  const [lastStep, setLastStep] = useState('');
+  const [, setLastStep] = useState('');
 
   useEffect(() => {
-    setStep('banks');
-  }, []);
+    console.log(bank);
+    if (bank) {
+      setStep('userAgreement');
+      setLastStep('banks');
+    } else {
+      setStep('banks');
+      setLastStep('banks');
+    }
+  }, [bank]);
 
   const render = () => {
     switch (step) {
       case 'banks':
         return <Banks />;
+      case 'userAgreement':
+        return <UserAgreement />;
       default:
         return null;
     }
   };
-  return <div>{render()}</div>;
+
+  return (
+    <SessionContext.Provider
+      value={{
+        bank,
+        setBank: (bank) => {
+          setBank(bank);
+        },
+      }}
+    >
+      <div>{render()}</div>
+    </SessionContext.Provider>
+  );
 };
 
 export default App;
