@@ -2,12 +2,13 @@ import React, { FC, useEffect, useState } from 'react';
 import { useSessionContext } from '../contexts/SessionContext';
 
 const Banks = () => {
-  const { requisitionId } = useSessionContext();
+  const { requisitionId, setAccountId } = useSessionContext();
+  console.log('ban', requisitionId);
 
   const [accounts, setAccounts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [selectedAccount, setSelectedAccount] = useState('');
-  const [accountId, setAccountId] = useState('');
+  const [tempAccountId, setTempAccountId] = useState('');
 
   useEffect(() => {
     (async function () {
@@ -30,7 +31,7 @@ const Banks = () => {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setAccountId(accountId);
+    setAccountId(tempAccountId);
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -38,7 +39,7 @@ const Banks = () => {
       return item.name == event.target.value;
     });
     setSelectedAccount(event.target.value);
-    setAccountId(account[0]?.id);
+    setTempAccountId(account[0]?.id);
   };
 
   return !isLoading ? (

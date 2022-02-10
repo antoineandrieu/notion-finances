@@ -1,36 +1,52 @@
 import React, { useEffect, useState } from 'react';
-import { SessionContext } from '../contexts/SessionContext';
+import { SessionContext, useSessionContext } from '../contexts/SessionContext';
 import Banks from './Banks';
 import Accounts from './Accounts';
+import Transactions from './Transactions';
 import UserAgreement from './UserAgreement';
 
 const App = () => {
+  {
+    /* const { accountId } = useSessionContext(); */
+  }
+
   const [bank, setBank] = useState('');
   const [requisitionId, setRequisitionId] = useState('');
+  const [accountId, setAccountId] = useState('');
   const [step, setStep] = useState('');
   const [, setLastStep] = useState('');
-  let sessionStorage;
 
+  let sessionStorage;
   if (typeof window !== 'undefined') {
     sessionStorage = window.sessionStorage;
   }
 
   useEffect(() => {
     const requisitionId = sessionStorage.getItem('requisitionId');
+    if (accountId) {
+      setStep('transactions');
+      setLastStep('accounts');
+      return;
+    }
     if (requisitionId) {
       setRequisitionId(requisitionId);
       setStep('accounts');
-    } else if (bank) {
+      setLastStep('userAgreement');
+      return;
+    }
+    if (bank) {
       setStep('userAgreement');
       setLastStep('banks');
-    } else {
-      setStep('banks');
-      setLastStep('banks');
+      return;
     }
-  }, [bank]);
+    setStep('banks');
+    setLastStep('banks');
+  }, [accountId, requisitionId, bank]);
 
   const render = () => {
     switch (step) {
+      case 'transactions':
+        return <Transactions />;
       case 'banks':
         return <Banks />;
       case 'userAgreement':
@@ -53,6 +69,10 @@ const App = () => {
         setRequisitionId: (requisitionId) => {
           setRequisitionId(requisitionId);
           sessionStorage.setItem('requisitionId', requisitionId);
+        },
+        accountId,
+        setAccountId: (accountId) => {
+          setAccountId(accountId);
         },
       }}
     >

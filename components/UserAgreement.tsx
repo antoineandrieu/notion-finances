@@ -17,7 +17,6 @@ const UserAgreement = () => {
         });
         const data = await response.json();
         setRequisitionId(data.data.requisitionId);
-        console.log(data.data);
         window.location.href = data.data.link;
       } catch (error) {
         console.error('An error occurred:', error);

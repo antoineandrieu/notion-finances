@@ -5,6 +5,8 @@ export type SessionContextType = {
   setBank: (bank: string) => void;
   requisitionId: string;
   setRequisitionId: (requisitionId: string) => void;
+  accountId: string;
+  setAccountId: (accountId: string) => void;
 };
 
 export const SessionContext = React.createContext<SessionContextType>({
@@ -12,6 +14,8 @@ export const SessionContext = React.createContext<SessionContextType>({
   setBank: () => '',
   requisitionId: '',
   setRequisitionId: () => '',
+  accountId: '',
+  setAccountId: () => '',
 });
 
 function useSessionContext() {
@@ -27,12 +31,15 @@ function useSessionContext() {
 function SessionContextProvider(props: React.PropsWithChildren<{}>) {
   const [bank, setBank] = useState('');
   const [requisitionId, setRequisitionId] = useState('');
+  const [accountId, setAccountId] = useState('');
 
   const sessionValue = {
     bank,
     setBank,
     requisitionId,
     setRequisitionId,
+    accountId,
+    setAccountId,
   };
 
   return <SessionContext.Provider value={sessionValue} {...props} />;

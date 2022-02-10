@@ -12,19 +12,10 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   await getToken();
   const body = JSON.parse(req.body);
   try {
-    const requisitionData = await client.requisition.getRequisitionById(
-      body.requisitionId
-    );
+    const account = await client.account(body.accountId);
+    const transactions = await account.getTransactions();
 
-    const accounts = await Promise.all(
-      requisitionData.accounts.map(async (accountId: any) => {
-        const account = await client.account(accountId);
-        const accountData = await account.getDetails();
-        return { id: accountId, name: accountData.account.name };
-      })
-    );
-
-    res.status(200).json({ data: accounts });
+    res.status(200).json({ data: transactions.transactions });
   } catch (error) {
     console.error(error);
     res.status(500);
