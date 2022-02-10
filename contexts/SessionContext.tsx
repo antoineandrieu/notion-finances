@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 
 export type SessionContextType = {
-  institution: string;
-  setInstitution: (institution: string) => void;
+  bank: string;
+  setBank: (bank: string) => void;
 };
 
 export const SessionContext = React.createContext<SessionContextType>({
-  institution: '',
-  setInstitution: () => '',
+  bank: '',
+  setBank: () => '',
 });
 
 function useSessionContext() {
@@ -21,11 +21,11 @@ function useSessionContext() {
 }
 
 function SessionContextProvider(props: React.PropsWithChildren<{}>) {
-  const [institution, setInstitution] = useState('');
+  const [bank, setBank] = useState('');
 
   const sessionValue = {
-    institution,
-    setInstitution,
+    bank,
+    setBank,
   };
 
   return <SessionContext.Provider value={sessionValue} {...props} />;
