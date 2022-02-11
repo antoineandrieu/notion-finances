@@ -26,9 +26,39 @@ const Transactions = () => {
     })();
   }, []);
 
+  const createDatabase = async () => {
+    try {
+      const response = await fetch('/api/notion', {
+        method: 'POST',
+      });
+      const data = await response.json();
+      console.log(data);
+    } catch (error) {
+      console.error('An error occurred:', error);
+    }
+  };
+
+  const updateDatabase = async () => {
+    try {
+      const body = JSON.stringify({ accountId });
+      const response = await fetch('/api/notion', {
+        method: 'PATCH',
+        body,
+      });
+      const data = await response.json();
+      console.log(data);
+    } catch (error) {
+      console.error('An error occurred:', error);
+    }
+  };
+
   return transactions.length ? (
     <div>
-      <h1>transactions</h1>
+      <h1>Exprot transactions</h1>
+      <button onClick={() => createDatabase()}>Create a new database</button>
+      <button onClick={() => updateDatabase()}>
+        Update an existing database
+      </button>
       <ul>
         {transactions.map((transaction) => (
           <li key={transaction.transactionId}>
