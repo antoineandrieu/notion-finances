@@ -1,9 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { SessionContext, useSessionContext } from '../contexts/SessionContext';
+
+import styled from 'styled-components';
 import Banks from './Banks';
 import Accounts from './Accounts';
 import Transactions from './Transactions';
 import UserAgreement from './UserAgreement';
+
+const StyledApp = styled.div`
+  background-color: #333333;
+`;
 
 const App = () => {
   {
@@ -76,7 +82,7 @@ const App = () => {
         },
       }}
     >
-      <div>{render()}</div>
+      <StyledApp>{render()}</StyledApp>
     </SessionContext.Provider>
   );
 };

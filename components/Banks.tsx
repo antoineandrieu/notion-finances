@@ -39,7 +39,7 @@ const Banks = () => {
 
   return !isLoading ? (
     <div>
-      <h1>banks</h1>
+      <h2>Select your bank</h2>
       <form onSubmit={handleSubmit}>
         <select value={selectedbank} onChange={handleChange}>
           <option>Select an bank</option>
