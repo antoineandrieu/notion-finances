@@ -3,13 +3,12 @@ import Head from 'next/head';
 import Image from 'next/image';
 import App from '../components/App';
 import styled from 'styled-components';
+import Footer from '../components/Footer';
 
 const StyledHome = styled.div`
   display: grid;
   grid-template-rows: 20% 70% 10%;
   height: 100vh;
-  background-color: #000714;
-  color: #ebf5ff;
 `;
 
 const Title = styled.h1`
@@ -17,12 +16,6 @@ const Title = styled.h1`
   justify-content: center;
   align-items: center;
   font-family: 'Josefin Sans', sans-serif;
-`;
-
-const Footer = styled.footer`
-  display: flex;
-  justify-content: center;
-  align-items: center;
 `;
 
 const Home: NextPage = () => {
@@ -37,18 +30,7 @@ const Home: NextPage = () => {
       <Title>Import your transaction to Notion</Title>
       <App />
 
-      <Footer>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <span>
-            <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
-          </span>
-        </a>
-      </Footer>
+      <Footer />
     </StyledHome>
   );
 };

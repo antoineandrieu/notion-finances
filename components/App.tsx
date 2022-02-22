@@ -8,7 +8,8 @@ import Transactions from './Transactions';
 import UserAgreement from './UserAgreement';
 
 const StyledApp = styled.div`
-  background-color: #333333;
+  display: flex;
+  justify-content: center;
 `;
 
 const App = () => {
